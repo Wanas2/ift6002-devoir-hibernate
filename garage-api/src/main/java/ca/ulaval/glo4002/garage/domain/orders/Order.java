@@ -6,10 +6,30 @@ import java.util.List;
 
 import ca.ulaval.glo4002.garage.domain.appointments.AppointmentNumber;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "orders")
 public class Order {
-    private final LocalDateTime date;
-    private final AppointmentNumber referenceNumber;
-    private final List<Part> parts = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private LocalDateTime date;
+
+    @AttributeOverrides({
+            @AttributeOverride(name="number",
+                    column=@Column(name="appointmentNumber"))
+    })
+
+    @Embedded
+    private AppointmentNumber referenceNumber;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private List<Part> parts = new ArrayList<>();
+
+    public Order(){}
 
     public Order(LocalDateTime date, AppointmentNumber referenceNumber) {
         this.date = date;

@@ -1,12 +1,19 @@
 package ca.ulaval.glo4002.garage.domain.appointments;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+@Embeddable
+@Access(AccessType.PROPERTY)
 public class AppointmentNumber {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private String number;
+
+    public AppointmentNumber(){}
 
     public static AppointmentNumber create(LocalDate date, String identifier) {
         return new AppointmentNumber(date.format(FORMATTER) + "-" + identifier);
@@ -22,6 +29,10 @@ public class AppointmentNumber {
 
     public String getNumber() {
         return number;
+    }
+
+    public void setNumber(String number){
+        this.number = number;
     }
 
     @Override
