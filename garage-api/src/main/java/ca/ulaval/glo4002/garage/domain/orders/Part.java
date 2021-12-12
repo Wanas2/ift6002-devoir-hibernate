@@ -1,8 +1,18 @@
 package ca.ulaval.glo4002.garage.domain.orders;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "parts")
 public class Part {
-    private final int quantity;
-    private final String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private int quantity;
+    private String name;
+
+    public Part() {}
 
     public Part(int quantity, String name) {
         this.quantity = quantity;

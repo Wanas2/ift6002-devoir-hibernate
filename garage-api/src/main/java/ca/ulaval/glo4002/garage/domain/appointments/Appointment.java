@@ -1,9 +1,26 @@
 package ca.ulaval.glo4002.garage.domain.appointments;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "appointments")
 public class Appointment {
-    private final AppointmentNumber appointmentNumber;
-    private final String clientName;
-    private final String clientPhone;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @AttributeOverrides({
+            @AttributeOverride(name="number",
+                    column=@Column(name="appointmentNumber"))
+    })
+
+    @Embedded
+    private AppointmentNumber appointmentNumber;
+    private String clientName;
+    private String clientPhone;
+
+    public Appointment(){
+    }
 
     public Appointment(AppointmentNumber appointmentNumber, String clientName, String clientPhone) {
         this.appointmentNumber = appointmentNumber;
